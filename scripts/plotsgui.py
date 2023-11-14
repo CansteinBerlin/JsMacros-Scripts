@@ -45,7 +45,7 @@ def init(screen):
     y += 13
     # Line: 
     screen.addLine(0, y, width, y, 0xEEEEEE)
-    y += 10
+    y += 6
     # Buttons
     cx = 0
     bwidth = bheight = 20
@@ -54,9 +54,9 @@ def init(screen):
         screen.addCheckbox(cx + (dist - bwidth) / 2, y, bwidth, bheight, str(i + 1), False, JavaWrapper.methodToJava(
             lambda btnHelper, screen: clickCansteinButton(btnHelper, int(btnHelper.getLabel().getString()))))
         cx += dist
-    y += bheight + 20
+    y += bheight + 15
 
-    bwidth = (width - 160) / 5
+    bwidth = (width - 5) / 5
     bbw = width / 4 
     cx = 0
     #Create Plot with Players
@@ -83,7 +83,7 @@ def init(screen):
     ))
 
 
-    y += bheight + 40
+    y += bheight + 25
 
     ############## Plot Actions ##############
     # Title:
@@ -95,7 +95,7 @@ def init(screen):
     
     actions = ["info", "claim", "delete", "done", "continue"]
     titles = ["Plot Info", "Claim Plot", "Delete Plot", "Mark Done", "Continue"]
-    bwidth = (width - 160) / (len(actions) + 1)
+    bwidth = (width - 5) / (len(actions) + 1)
     bbw = width / len(actions)
     cx = 0
     for index in range(len(actions)):
@@ -103,7 +103,7 @@ def init(screen):
             lambda btnHelper, screen: actionInPlot(actions[titles.index(btnHelper.getLabel().getString())])
         ))
         cx += bbw
-    y += bheight + 40
+    y += bheight + 25
 
     ############## Player Specific Actions ##############
     # Title:
@@ -119,7 +119,7 @@ def init(screen):
     #Buttons
     actions_2 = ["add", "trust", "setowner", "remove", "deny", "visit"]
     titles_2 = ["Add", "Trust", "SetOwner", "Remove", "Deny", "Visit"]
-    bwidth = (width - 160) / (len(actions_2) + 1)
+    bwidth = (width - 5) / (len(actions_2) + 1)
     bbw = width / len(actions_2)
     cx = 0
     for index in range(len(actions_2)):
@@ -127,9 +127,7 @@ def init(screen):
             lambda btnHelper, screen: playerSpecificActionInPlot(actions_2[titles_2.index(btnHelper.getLabel().getString())], textInput.getText())
         ))
         cx += bbw
-    y += bheight + 40
 
 screen = Hud.createScreen("PlotManager", False)
 screen.setOnInit(JavaWrapper.methodToJava(init))
 Hud.openScreen(screen)
-

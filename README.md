@@ -1,5 +1,5 @@
 # About
-Various JsMacros scripts for the team members to use at events / workshops and others.
+Various [JsMacros](https://modrinth.com/mod/jsmacros) scripts for the team members to use at events / workshops and others.
 
 # Scripts
 

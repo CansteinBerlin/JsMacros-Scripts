@@ -10,7 +10,7 @@ def createPlotWithPlayers():
         Player.moveForward(0)
         Client.waitTick(1)
     
-    actionPlayerInPlot("add")
+    actionPlayerInPlot("trust")
     Chat.say("/p setowner ServerInfo")
     Client.waitTick(20)
     

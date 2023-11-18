@@ -1,21 +1,71 @@
 if __name__ == "": 
     from JsMacrosAC import *
+    from .utils.widgets import *
+    
+# Handle and import methods from other folders
+import sys
+sys.path.insert(1, file.getParent() + "/utils")
+from widgets import *
 
+# Sizes of different buttons etc.
+CHECKBOX_SIZE = 20
+ONLINE_MARKER_HEIGHT = 4
+ONLINE_MARKER_WIDTH_ADDITION = 0
+BUTTON_HEIGHT = 20
+TEXT_INPUT_WIDTH = 200
+
+# Specific not centered x positions
+TEXT_INDENT_X = 30
+
+# Y Positions of different Rows
+
+CANSTEIN_ACCOUNTS_Y = 50
+OFFSET_Y_ELEMENTS = 7
+OFFSET_Y_MARKER = 3
+OFFSET_Y_TITLE = 25
+
+# Data
+CANSTEIN_ACCOUNTS = 15
+ONLINE_COLOR = 0x00ff00
+OFFLINE_COLOR = 0xff0000
+
+# This represents the canstein accounts that are enabled in the gui
+cansteinAccountsInWorld = []
 markedCansteinAccounts = []
 
+for player in World.getPlayers():
+    if "Canstein" in player.getName():
+        cansteinAccountsInWorld.append(player.getName())
+
+# Functions
 def createPlotWithPlayers():
     Chat.say("/p auto")
-    Client.waitTick(20)
+    Client.waitTick(30)
     for i in range(10):
         Player.moveForward(0)
         Client.waitTick(1)
     
+    Client.waitTick(10)
+    Chat.say("/p middle")
     actionPlayerInPlot("trust")
     Chat.say("/p setowner ServerInfo")
     Client.waitTick(20)
     
     for player in markedCansteinAccounts:
        Chat.say("/tphere Canstein" + str(player))
+
+def createPlotForAllPlayers():
+    global markedCansteinAccounts
+    copy = list(markedCansteinAccounts)
+    for player in copy:
+        markedCansteinAccounts = []
+        markedCansteinAccounts.append(player)
+        
+        createPlotWithPlayers()
+        Client.waitTick(10)
+        
+    markedCansteinAccounts = copy
+        
 
 def actionPlayerInPlot(action):
     for player in markedCansteinAccounts:
@@ -29,105 +79,97 @@ def playerSpecificActionInPlot(action, player):
     Chat.say("/p " + action + " " + player)
 
 
-def clickCansteinButton(btn, account):
+def clickCansteinButton(account):
     if account in markedCansteinAccounts:
         markedCansteinAccounts.remove(account)
     else:
         markedCansteinAccounts.append(account)
+    
+
+# Main Gui Creation
 def init(screen):
     width = screen.getWidth()
-    height = screen.getHeight()
-
-    y = 50
+    
     ############## Canstein Account ##############
     # Title:
-    screen.addText("Canstein Accounts:", 30, y, 0xFFFFFF, False, 1.2, 0)
-    y += 13
-    # Line: 
-    screen.addLine(0, y, width, y, 0xEEEEEE)
-    y += 6
-    # Buttons
-    cx = 0
-    bwidth = bheight = 20
-    dist = width / 13
-    for i in range(13):
-        screen.addCheckbox(cx + (dist - bwidth) / 2, y, bwidth, bheight, str(i + 1), False, JavaWrapper.methodToJava(
-            lambda btnHelper, screen: clickCansteinButton(btnHelper, int(btnHelper.getLabel().getString()))))
-        cx += dist
-    y += bheight + 15
-
-    bwidth = (width - 5) / 5
-    bbw = width / 4 
-    cx = 0
-    #Create Plot with Players
-    screen.addButton(cx + (bbw - bwidth) / 2, y, bwidth, 25, "Create plot with players", JavaWrapper.methodToJavaAsync(
-        lambda btnHelper, screen: createPlotWithPlayers()
-    ))
-    cx += bbw
-
-    #Add players to plot
-    screen.addButton(cx + (bbw - bwidth) / 2, y, bwidth, 25, "Add players to plot", JavaWrapper.methodToJavaAsync(
-        lambda btnHelper, screen: actionPlayerInPlot("add")
-    ))
-    cx += bbw
-
-    #Trust players to plot
-    screen.addButton(cx + (bbw - bwidth) / 2, y, bwidth, 25, "Trust players to plot", JavaWrapper.methodToJavaAsync(
-        lambda btnHelper, screen: actionPlayerInPlot("trust")
-    ))
-    cx += bbw
-
-    #Remove Players from plot
-    screen.addButton(cx + (bbw - bwidth) / 2, y, bwidth, 25, "Remove players from plot", JavaWrapper.methodToJavaAsync(
-        lambda btnHelper, screen: actionPlayerInPlot("remove")
-    ))
-
-
-    y += bheight + 25
-
-    ############## Plot Actions ##############
-    # Title:
-    screen.addText("Plot Actions:", 30, y, 0xFFFFFF, False, 1.2, 0)
-    y += 13
-    # Line: 
-    screen.addLine(0, y, width, y, 0xEEEEEE)
-    y += 10
+    currentYPos = textWithLine(screen, "Canstein Accounts:", TEXT_INDENT_X, CANSTEIN_ACCOUNTS_Y)
+    currentYPos += OFFSET_Y_ELEMENTS
     
+    # Checkboxes
+    buttons = []
+    for i in range(CANSTEIN_ACCOUNTS):
+        buttons.append(screen.addCheckbox(0, currentYPos, CHECKBOX_SIZE, CHECKBOX_SIZE, 0, str(i + 1), False, JavaWrapper.methodToJava(
+            lambda btnHelper, screen: clickCansteinButton(int(btnHelper.getLabel().getString()))
+        )))
+    centerWidgets(screen, buttons)
+    currentYPos += CHECKBOX_SIZE + OFFSET_Y_MARKER
+    
+    # If player not online disable checkboxes and display red Overlay 
+    rects = []
+    for i in range(CANSTEIN_ACCOUNTS):
+        rects.append(screen.addRect(0, currentYPos, buttons[0].getWidth() + ONLINE_MARKER_WIDTH_ADDITION, currentYPos + ONLINE_MARKER_HEIGHT, ONLINE_COLOR, 255, 0, 1))
+        if not ("Canstein" + str(i + 1)) in cansteinAccountsInWorld:
+            rects[i].setColor(OFFLINE_COLOR)
+    centerMultiposWidgets(screen, rects)
+    currentYPos += ONLINE_MARKER_HEIGHT + OFFSET_Y_ELEMENTS
+    
+    # Create, add, trust, remove player buttons
+    texts = ["Create plot with players", "Add players to plot", "Trust players to plot", "Remove players from plot"]
+    functions = [createPlotWithPlayers, lambda: actionInPlot("add"), lambda: actionInPlot("trust"), lambda: actionInPlot("remove")]
+    buttons = createMultipleButtonsWithDifferentFunctions(JavaWrapper, screen, texts, functions, currentYPos, width / (len(texts) + 1), BUTTON_HEIGHT)
+    centerWidgets(screen, buttons)
+    currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
+    
+    
+    ################ Plot Actions ################
+    currentYPos = textWithLine(screen, "Plot Actions:", TEXT_INDENT_X, currentYPos)
+    currentYPos += OFFSET_Y_ELEMENTS
+    
+    # Buttons
     actions = ["info", "claim", "delete", "done", "continue"]
     titles = ["Plot Info", "Claim Plot", "Delete Plot", "Mark Done", "Continue"]
-    bwidth = (width - 5) / (len(actions) + 1)
-    bbw = width / len(actions)
-    cx = 0
+    buttons = []
     for index in range(len(actions)):
-        screen.addButton(cx + (bbw - bwidth) / 2, y, bwidth, 25, titles[index], JavaWrapper.methodToJavaAsync(
+        buttons.append(screen.addButton(0, currentYPos, width / (len(actions) + 1), BUTTON_HEIGHT, titles[index], JavaWrapper.methodToJavaAsync(
             lambda btnHelper, screen: actionInPlot(actions[titles.index(btnHelper.getLabel().getString())])
-        ))
-        cx += bbw
-    y += bheight + 25
-
-    ############## Player Specific Actions ##############
-    # Title:
-    screen.addText("Plot Actions:", 30, y, 0xFFFFFF, False, 1.2, 0)
-    y += 13
-    # Line: 
-    screen.addLine(0, y, width, y, 0xEEEEEE)
-    y += 10
-    # Input
-    text = screen.addText("Player:", 30, y + 5, 0xFFFFFF, False, 1, 0)
-    textInput = screen.addTextInput(30 + text.getWidth() + 20, y, 200, 20, "", JavaWrapper.methodToJava(lambda string, screen: None))
-    y += 30
-    #Buttons
+        )))
+    centerWidgets(screen, buttons)
+    currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
+    
+    ########### Player Specific Actions ##########
+    #################### Misc ####################
+    currentYPos = textWithLine(screen, "Plot Actions:", TEXT_INDENT_X, currentYPos)
+    currentYPos += OFFSET_Y_ELEMENTS
+    
+    # Input Line with text display
+    text = screen.addText("Player:", TEXT_INDENT_X, currentYPos + 5, 0xFFFFFF, False, 1, 0)
+    textInput = screen.addTextInput(TEXT_INDENT_X + text.getWidth() + 20, currentYPos, TEXT_INPUT_WIDTH, BUTTON_HEIGHT, "", JavaWrapper.methodToJava(lambda string, screen: None))
+    currentYPos += BUTTON_HEIGHT + OFFSET_Y_ELEMENTS
+    
+    # Buttons
     actions_2 = ["add", "trust", "setowner", "remove", "deny", "visit"]
     titles_2 = ["Add", "Trust", "SetOwner", "Remove", "Deny", "Visit"]
-    bwidth = (width - 5) / (len(actions_2) + 1)
-    bbw = width / len(actions_2)
-    cx = 0
+    buttons = []
     for index in range(len(actions_2)):
-        screen.addButton(cx + (bbw - bwidth) / 2, y, bwidth, 25, titles_2[index], JavaWrapper.methodToJavaAsync(
+        buttons.append(screen.addButton(0, currentYPos, width / (len(actions_2) + 1), BUTTON_HEIGHT, titles_2[index], JavaWrapper.methodToJavaAsync(
             lambda btnHelper, screen: playerSpecificActionInPlot(actions_2[titles_2.index(btnHelper.getLabel().getString())], textInput.getText())
-        ))
-        cx += bbw
+        )))
+    centerWidgets(screen, buttons)
+    currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
+    
+    #################### Misc ####################
+    currentYPos = currentYPos = textWithLine(screen, "Misc:", TEXT_INDENT_X, currentYPos)
+    currentYPos += OFFSET_Y_ELEMENTS
+    
+    # Add buttons
+    texts = ["Create plot for every player"]
+    functions = [createPlotForAllPlayers]
+    buttons = createMultipleButtonsWithDifferentFunctions(JavaWrapper, screen, texts, functions, currentYPos, width / (len(texts) + 1), BUTTON_HEIGHT)
+    centerWidgets(screen, buttons)
+    currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
 
+
+# Create and Display Screen
 screen = Hud.createScreen("PlotManager", False)
 screen.setOnInit(JavaWrapper.methodToJava(init))
 Hud.openScreen(screen)

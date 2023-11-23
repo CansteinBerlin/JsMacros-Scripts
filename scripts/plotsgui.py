@@ -7,6 +7,8 @@ import sys
 sys.path.insert(1, file.getParent() + "/utils")
 from widgets import *
 
+from xyz.wagyourtail.jsmacros.client.api.helpers import TextHelper
+
 # Sizes of different buttons etc.
 CHECKBOX_SIZE = 20
 ONLINE_MARKER_HEIGHT = 4
@@ -92,7 +94,7 @@ def init(screen):
     
     ############## Canstein Account ##############
     # Title:
-    currentYPos = textWithLine(screen, "Canstein Accounts:", TEXT_INDENT_X, CANSTEIN_ACCOUNTS_Y)
+    currentYPos = textWithLine(screen, "Canstein Accounts (Applies to all selected players):", TEXT_INDENT_X, CANSTEIN_ACCOUNTS_Y)
     currentYPos += OFFSET_Y_ELEMENTS
     
     # Checkboxes
@@ -114,15 +116,16 @@ def init(screen):
     currentYPos += ONLINE_MARKER_HEIGHT + OFFSET_Y_ELEMENTS
     
     # Create, add, trust, remove player buttons
+    #texts = [getTextInitialWordBold(Chat, "Create plot with players"), getTextInitialWordBold(Chat, "Add players to plot"), getTextInitialWordBold(Chat, "Trust players to plot"), getTextInitialWordBold(Chat, "Remove players from plot")]
     texts = ["Create plot with players", "Add players to plot", "Trust players to plot", "Remove players from plot"]
     functions = [createPlotWithPlayers, lambda: actionInPlot("add"), lambda: actionInPlot("trust"), lambda: actionInPlot("remove")]
-    buttons = createMultipleButtonsWithDifferentFunctions(JavaWrapper, screen, texts, functions, currentYPos, width / (len(texts) + 1), BUTTON_HEIGHT)
+    buttons = createMultipleButtonsWithDifferentFunctions(JavaWrapper, Chat, screen, texts, functions, currentYPos, width / (len(texts) + 1), BUTTON_HEIGHT)
     centerWidgets(screen, buttons)
     currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
     
     
     ################ Plot Actions ################
-    currentYPos = textWithLine(screen, "Plot Actions:", TEXT_INDENT_X, currentYPos)
+    currentYPos = textWithLine(screen, "Plot Actions (Applies to the plot you are on):", TEXT_INDENT_X, currentYPos)
     currentYPos += OFFSET_Y_ELEMENTS
     
     # Buttons
@@ -137,8 +140,7 @@ def init(screen):
     currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
     
     ########### Player Specific Actions ##########
-    #################### Misc ####################
-    currentYPos = textWithLine(screen, "Plot Actions:", TEXT_INDENT_X, currentYPos)
+    currentYPos = textWithLine(screen, "Player specific Actions (Applies to the player typed into the box):", TEXT_INDENT_X, currentYPos)
     currentYPos += OFFSET_Y_ELEMENTS
     
     # Input Line with text display
@@ -158,13 +160,13 @@ def init(screen):
     currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
     
     #################### Misc ####################
-    currentYPos = currentYPos = textWithLine(screen, "Misc:", TEXT_INDENT_X, currentYPos)
+    currentYPos = currentYPos = textWithLine(screen, "Misc (For every selected player seperately):", TEXT_INDENT_X, currentYPos)
     currentYPos += OFFSET_Y_ELEMENTS
     
     # Add buttons
-    texts = ["Create plot for every player"]
+    texts = ["Create plot"]
     functions = [createPlotForAllPlayers]
-    buttons = createMultipleButtonsWithDifferentFunctions(JavaWrapper, screen, texts, functions, currentYPos, width / (len(texts) + 1), BUTTON_HEIGHT)
+    buttons = createMultipleButtonsWithDifferentFunctions(JavaWrapper, Chat, screen, texts, functions, currentYPos, width / (len(texts) + 1), BUTTON_HEIGHT)
     centerWidgets(screen, buttons)
     currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
 

@@ -63,7 +63,7 @@ def init(screen):
     
     # Buttons
     texts = ["Lobby Server", "Creative Server"]
-    functions = [lambda: runCommand("/server lb"), lambda: runCommand("/server cr")]
+    functions = [lambda: runCommand("/server lb"), lambda: runCommand("/server ps")]
     buttons = createMultipleButtonsWithDifferentFunctions(JavaWrapper, Chat, screen, texts, functions, currentYPos, width / (len(texts) + 1), BUTTON_HEIGHT)
     centerWidgets(screen, buttons)
     currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE

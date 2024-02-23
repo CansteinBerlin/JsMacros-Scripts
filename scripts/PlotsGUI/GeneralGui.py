@@ -117,7 +117,7 @@ def init(screen):
     currentYPos += OFFSET_Y_ELEMENTS
     
     texts_2 = ["Lobby", "Creative", "Events", "Survival", "Cooperation"]
-    actions_2 = ["lb", "cr", "ev", "sv", "co"]
+    actions_2 = ["lb", "ps", "is", "sv", "co"]
     buttons = []
     for index in range(len(actions_2)):
         buttons.append(screen.addButton(0, currentYPos, width / (len(actions_2) + 1), BUTTON_HEIGHT, texts_2[index], JavaWrapper.methodToJavaAsync(

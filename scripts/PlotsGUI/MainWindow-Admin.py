@@ -1,22 +1,20 @@
-
-
 if __name__ == "": 
     from JsMacrosAC import *
-    from .utils.widgets import *
+    from ..utils.widgets import *
     
 # Handle and import methods from other folders
 import sys
-sys.path.insert(1, file.getParent() + "/utils")
+sys.path.insert(1, file.getParentFile().getParent() + "/utils")
 from widgets import *
 
 # Save Gui scale for later usage
 guiScale = Client.getGameOptions().getVideoOptions().getGuiScale()
-screens = {"Plot Gui": "plotsgui.py", "Allgemeine Gui": "generalgui.py"}
+screens = {"Plot Gui": "PlotsGui.py", "Allgemeine Gui": "GeneralGui.py"}
 
 def openWindow(guiName):
     Hud.getOpenScreen().close()
     GlobalVars.putString("currentOpenScreen", guiName)
-    JsMacros.runScript(file.getParent() + "/" + screens[guiName])
+    JsMacros.runScript(file.getParentFile().getParent() + "/PlotsGUI/" + screens[guiName])
 
 def init(screen):
     width = screen.getWidth()
@@ -50,4 +48,4 @@ if currentScreen == None:
     
 else:
     if currentScreen in screens.keys():
-        JsMacros.runScript(file.getParent() + "/" + screens[currentScreen])
+        JsMacros.runScript(file.getParentFile().getParent() + "/PlotsGUI/" + screens[currentScreen])

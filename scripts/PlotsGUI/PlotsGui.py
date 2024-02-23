@@ -1,10 +1,10 @@
 if __name__ == "": 
     from JsMacrosAC import *
-    from .utils.widgets import *
+    from ..utils.widgets import *
     
 # Handle and import methods from other folders
 import sys
-sys.path.insert(1, file.getParent() + "/utils")
+sys.path.insert(1, file.getParentFile().getParent() + "/utils")
 from widgets import *
 
 # Sizes of different buttons etc.
@@ -91,7 +91,7 @@ guiScale = Client.getGameOptions().getVideoOptions().getGuiScale()
 def back():
     Hud.getOpenScreen().close()
     GlobalVars.remove("currentOpenScreen")
-    JsMacros.runScript(file.getParent() + "/" + "MainWindow-Admin.py")
+    JsMacros.runScript(file.getParentFile().getParent() + "/PlotsGUI/" + "MainWindow-Admin.py")
 
 
 # Main Gui Creation

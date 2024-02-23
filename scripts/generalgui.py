@@ -37,53 +37,28 @@ for player in World.getPlayers():
     if "Canstein" in player.getName():
         cansteinAccountsInWorld.append(player.getName())
 
-# Functions
-def createPlotWithPlayers():
-    Chat.say("/p auto")
-    Client.waitTick(30)
-    for i in range(10):
-        Player.moveForward(0)
-        Client.waitTick(1)
-    
-    Client.waitTick(10)
-    Chat.say("/p middle")
-    actionPlayerInPlot("trust")
-    Chat.say("/p setowner ServerInfo")
-    Client.waitTick(20)
-    
-    for player in markedCansteinAccounts:
-       Chat.say("/tphere Canstein" + str(player))
-
-def createPlotForAllPlayers():
-    global markedCansteinAccounts
-    copy = list(markedCansteinAccounts)
-    for player in copy:
-        markedCansteinAccounts = []
-        markedCansteinAccounts.append(player)
-        
-        createPlotWithPlayers()
-        Client.waitTick(10)
-        
-    markedCansteinAccounts = copy
-        
-
-def actionPlayerInPlot(action):
-    for player in markedCansteinAccounts:
-        Chat.say("/p " + action + " Canstein" + str(player))
-        Client.waitTick(5)
-    
-def actionInPlot(action):
-    Chat.say("/p " + action)
-
-def playerSpecificActionInPlot(action, player):
-    Chat.say("/p " + action + " " + player)
-
-
 def clickCansteinButton(account):
     if account in markedCansteinAccounts:
         markedCansteinAccounts.remove(account)
     else:
         markedCansteinAccounts.append(account)
+        
+def actionForAllSelectedPlayers(command, inputText):
+    copy = command
+    for player in markedCansteinAccounts:
+        Chat.say(copy.replace("player", "Canstein" + str(player)))
+    
+    if len(inputText) > 0:
+        Chat.say(copy.replace("player", inputText))
+
+def actionForAllPlayers(command, inputText):
+    copy = command
+    for player in range(1, 16):
+        Chat.say(copy.replace("player", "Canstein" + str(player)))
+        Client.waitTick(1)
+    
+    if len(inputText) > 0:
+        Chat.say(copy.replace("player", inputText))
     
 # Save Gui scale for later usage
 guiScale = Client.getGameOptions().getVideoOptions().getGuiScale()
@@ -93,14 +68,14 @@ def back():
     GlobalVars.remove("currentOpenScreen")
     JsMacros.runScript(file.getParent() + "/" + "MainWindow-Admin.py")
 
-
 # Main Gui Creation
 def init(screen):
     width = screen.getWidth()
+    height = screen.getHeight()
     
-    ############## Canstein Account ##############
+    ############## Canstein Accounts And Player Input ##############
     # Title:
-    currentYPos = textWithLine(screen, "Canstein Accounts (Applies to all selected players):", TEXT_INDENT_X, CANSTEIN_ACCOUNTS_Y)
+    currentYPos = textWithLine(screen, "Canstein Account selection and player input:", TEXT_INDENT_X, CANSTEIN_ACCOUNTS_Y)
     currentYPos += OFFSET_Y_ELEMENTS
     
     # Checkboxes
@@ -119,59 +94,61 @@ def init(screen):
         if not ("Canstein" + str(i + 1)) in cansteinAccountsInWorld:
             rects[i].setColor(OFFLINE_COLOR)
     centerMultiposWidgets(screen, rects)
-    currentYPos += ONLINE_MARKER_HEIGHT + OFFSET_Y_ELEMENTS
     
-    # Create, add, trust, remove player buttons
-    #texts = [getTextInitialWordBold(Chat, "Create plot with players"), getTextInitialWordBold(Chat, "Add players to plot"), getTextInitialWordBold(Chat, "Trust players to plot"), getTextInitialWordBold(Chat, "Remove players from plot")]
-    texts = ["Create plot with players", "Add players to plot", "Trust players to plot", "Remove players from plot"]
-    functions = [createPlotWithPlayers, lambda: actionPlayerInPlot("add"), lambda: actionPlayerInPlot("trust"), lambda: actionPlayerInPlot("remove")]
+    # Player Input
+    currentYPos += ONLINE_MARKER_HEIGHT + OFFSET_Y_ELEMENTS
+    text = screen.addText("Player:", TEXT_INDENT_X, currentYPos + 5, 0xFFFFFF, False, 1, 0)
+    textInput = screen.addTextInput(TEXT_INDENT_X + text.getWidth() + 20, currentYPos, TEXT_INPUT_WIDTH, BUTTON_HEIGHT, "", JavaWrapper.methodToJava(lambda string, screen: None))
+    currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
+    
+    ############## Allgemeine Aktionen ##############
+    currentYPos = textWithLine(screen, "Allgemeine Aktionen (For all selected players)", TEXT_INDENT_X, currentYPos)
+    currentYPos += OFFSET_Y_ELEMENTS
+    
+    # Teleport to you
+    texts = ["Teleport to you"]
+    functions = [lambda: actionForAllSelectedPlayers("/tphere player", textInput.getText())]
     buttons = createMultipleButtonsWithDifferentFunctions(JavaWrapper, Chat, screen, texts, functions, currentYPos, width / (len(texts) + 1), BUTTON_HEIGHT)
     centerWidgets(screen, buttons)
     currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
     
-    
-    ################ Plot Actions ################
-    currentYPos = textWithLine(screen, "Plot Actions (Applies to the plot you are on):", TEXT_INDENT_X, currentYPos)
+    ############## Send Befehle ##############
+    currentYPos = textWithLine(screen, "Send to another server (For all selected players)", TEXT_INDENT_X, currentYPos)
     currentYPos += OFFSET_Y_ELEMENTS
     
-    # Buttons
-    actions = ["info", "claim", "delete", "done", "continue"]
-    titles = ["Plot Info", "Claim Plot", "Delete Plot", "Mark Done", "Continue"]
-    buttons = []
-    for index in range(len(actions)):
-        buttons.append(screen.addButton(0, currentYPos, width / (len(actions) + 1), BUTTON_HEIGHT, titles[index], JavaWrapper.methodToJavaAsync(
-            lambda btnHelper, screen: actionInPlot(actions[titles.index(btnHelper.getLabel().getString())])
-        )))
-    centerWidgets(screen, buttons)
-    currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
-    
-    ########### Player Specific Actions ##########
-    currentYPos = textWithLine(screen, "Player specific Actions (Applies to the player typed into the box):", TEXT_INDENT_X, currentYPos)
-    currentYPos += OFFSET_Y_ELEMENTS
-    
-    # Input Line with text display
-    text = screen.addText("Player:", TEXT_INDENT_X, currentYPos + 5, 0xFFFFFF, False, 1, 0)
-    textInput = screen.addTextInput(TEXT_INDENT_X + text.getWidth() + 20, currentYPos, TEXT_INPUT_WIDTH, BUTTON_HEIGHT, "", JavaWrapper.methodToJava(lambda string, screen: None))
-    currentYPos += BUTTON_HEIGHT + OFFSET_Y_ELEMENTS
-    
-    # Buttons
-    actions_2 = ["add", "trust", "setowner", "remove", "deny", "visit"]
-    titles_2 = ["Add", "Trust", "SetOwner", "Remove", "Deny", "Visit"]
+    texts_2 = ["Lobby", "Creative", "Events", "Survival", "Cooperation"]
+    actions_2 = ["lb", "cr", "ev", "sv", "co"]
     buttons = []
     for index in range(len(actions_2)):
-        buttons.append(screen.addButton(0, currentYPos, width / (len(actions_2) + 1), BUTTON_HEIGHT, titles_2[index], JavaWrapper.methodToJavaAsync(
-            lambda btnHelper, screen: playerSpecificActionInPlot(actions_2[titles_2.index(btnHelper.getLabel().getString())], textInput.getText())
+        buttons.append(screen.addButton(0, currentYPos, width / (len(actions_2) + 1), BUTTON_HEIGHT, texts_2[index], JavaWrapper.methodToJavaAsync(
+            lambda btnHelper, _: actionForAllSelectedPlayers("/send player " + actions_2[texts_2.index(btnHelper.getLabel().getString())], textInput.getText())
         )))
     centerWidgets(screen, buttons)
     currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
     
-    #################### Misc ####################
-    currentYPos = currentYPos = textWithLine(screen, "Misc (For every selected player seperately):", TEXT_INDENT_X, currentYPos)
+    ############## Util Befehle ##############
+    currentYPos = textWithLine(screen, "Util Commands (For all selected players)", TEXT_INDENT_X, currentYPos)
     currentYPos += OFFSET_Y_ELEMENTS
     
-    # Add buttons
-    texts = ["Create plot"]
-    functions = [createPlotForAllPlayers]
+    texts_3 = ["Mute", "Unmute", "Jail", "Unjail"]
+    actions_3 = ["/mute player", "/unmute player", "/jail player 1h Stoeren der Arbeiten", "/unjail player"]
+    buttons = []
+    for index in range(len(texts_3)):
+        buttons.append(screen.addButton(0, currentYPos, width / (len(actions_3) + 1), BUTTON_HEIGHT, texts_3[index], JavaWrapper.methodToJavaAsync(
+            lambda btnHelper, _: actionForAllSelectedPlayers(actions_3[texts_3.index(btnHelper.getLabel().getString())], textInput.getText())
+        )))
+    centerWidgets(screen, buttons)
+    currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
+    
+    ############## Aktions for all players Aktionen ##############
+    currentYPos = textWithLine(screen, "Actions for all canstein accounts", TEXT_INDENT_X, currentYPos)
+    currentYPos += OFFSET_Y_ELEMENTS
+    
+    # Teleport to you
+    texts = ["Teleport all to you", "Unmute all", "Mute all"]
+    functions = [lambda: actionForAllPlayers("/tphere player", textInput.getText()), 
+                 lambda: actionForAllPlayers("/unmute player", textInput.getText()),
+                 lambda: actionForAllPlayers("/mute player", textInput.getText())]
     buttons = createMultipleButtonsWithDifferentFunctions(JavaWrapper, Chat, screen, texts, functions, currentYPos, width / (len(texts) + 1), BUTTON_HEIGHT)
     centerWidgets(screen, buttons)
     currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE

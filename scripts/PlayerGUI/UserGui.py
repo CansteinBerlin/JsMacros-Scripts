@@ -1,16 +1,18 @@
 if __name__ == "": 
     from JsMacrosAC import *
     from ..utils.widgets import *
+    from ..utils.commands import *
+    from ..utils.lang import Lang
     
 # Handle and import methods from other folders
 import sys
 sys.path.insert(1, file.getParentFile().getParent() + "/utils")
 from widgets import *
+from widgets import *
+from commands import *
+from lang import Lang
 
 # Sizes of different buttons etc.
-CHECKBOX_SIZE = 20
-ONLINE_MARKER_HEIGHT = 4
-ONLINE_MARKER_WIDTH_ADDITION = 0
 BUTTON_HEIGHT = 20
 TEXT_INPUT_WIDTH = 200
 
@@ -25,15 +27,10 @@ OFFSET_Y_MARKER = 3
 OFFSET_Y_TITLE = 25
 
 # Data
-CANSTEIN_ACCOUNTS = 15
-ONLINE_COLOR = 0x00ff00
-OFFLINE_COLOR = 0xff0000
+TOOLTIP_COLOR = "&7"
 
 # Save Gui scale for later usage
 guiScale = Client.getGameOptions().getVideoOptions().getGuiScale()
-
-def runCommand(command):
-    Chat.say(command)
 
 # Main Gui Creation
 def init(screen):
@@ -42,40 +39,79 @@ def init(screen):
     
     ############## Gamemode Switcher ##############
     # Title:
-    currentYPos = textWithLine(screen, "Gamemode Switcher:", TEXT_INDENT_X, CANSTEIN_ACCOUNTS_Y)
+    currentYPos = textWithLine(screen, lang.get("gamemodeSwitchTitle"), TEXT_INDENT_X, CANSTEIN_ACCOUNTS_Y)
     currentYPos += OFFSET_Y_ELEMENTS
     
-    # Buttons
-    titles = ["Survival", "Creative", "Spectator"]
-    actions = ["/gamemode 0", "/gamemode 1", "/gamemode 3"]
+    # Define commands and texts
+    texts_1 = [lang.get("survival"), lang.get("creative"), lang.get("spectator")]
+    actions_1 = ["/gamemode 0", "/gamemode 1", "/gamemode 3"]
     buttons = []
-    for index in range(len(actions)):
-        buttons.append(screen.addButton(0, currentYPos, width / (len(actions) + 1), BUTTON_HEIGHT, titles[index], JavaWrapper.methodToJavaAsync(
-            lambda btnHelper, screen: runCommand(actions[titles.index(btnHelper.getLabel().getString())])
+    
+    # Create buttons
+    for index in range(len(actions_1)):
+        buttons.append(screen.addButton(0, currentYPos, width / (len(actions_1) + 1), BUTTON_HEIGHT, texts_1[index], JavaWrapper.methodToJavaAsync(
+            lambda btnHelper, screen: runCommand(Chat, actions_1[texts_1.index(btnHelper.getLabel().getString())])
         )))
+        buttons[index].setTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_1[index]))
     centerWidgets(screen, buttons)
     currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
     
     ############## Server Switcher ##############
     # Title:
-    currentYPos = textWithLine(screen, "Server Switcher:", TEXT_INDENT_X, currentYPos)
+    currentYPos = textWithLine(screen, lang.get("serverSwitcherTitle"), TEXT_INDENT_X, currentYPos)
     currentYPos += OFFSET_Y_ELEMENTS
     
-    # Buttons
-    texts = ["Lobby Server", "Creative Server"]
-    functions = [lambda: runCommand("/server lb"), lambda: runCommand("/server ps")]
-    buttons = createMultipleButtonsWithDifferentFunctions(JavaWrapper, Chat, screen, texts, functions, currentYPos, width / (len(texts) + 1), BUTTON_HEIGHT)
+    # Define Commands and texts
+    texts_2 = [lang.get("lobbyServer"), lang.get("creativeServer")]
+    actions_2 = ["/server lb", "/server ps"]
+    
+    # Create buttons
+    buttons = []
+    for index in range(len(actions_2)):
+        buttons.append(screen.addButton(0, currentYPos, width / (len(actions_2) + 1), BUTTON_HEIGHT, texts_2[index], JavaWrapper.methodToJavaAsync(
+            lambda btnHelper, screen: runCommand(Chat, actions_2[texts_2.index(btnHelper.getLabel().getString())])
+        )))
+        buttons[index].setTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_2[index]))
     centerWidgets(screen, buttons)
     currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
     
+    ############## Builder Utilities ##############
+    # Title:
+    currentYPos = textWithLine(screen, lang.get("misc"), TEXT_INDENT_X, currentYPos)
+    currentYPos += OFFSET_Y_ELEMENTS
     
+    # Define commands and texts
+    texts_3 = [lang.get("specialBlocks"), lang.get("toggleflight")]
+    actions_3 = ["/bu special", "/toggleflight"]
+    
+    # Create buttons
+    buttons = []
+    for index in range(len(actions_3)):
+        buttons.append(screen.addButton(0, currentYPos, width / (len(actions_3) + 1), BUTTON_HEIGHT, texts_3[index], JavaWrapper.methodToJavaAsync(
+            lambda btnHelper, screen: runCommand(Chat, actions_3[texts_3.index(btnHelper.getLabel().getString())])
+        )))
+        buttons[index].setTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_3[index]))
+    centerWidgets(screen, buttons)
+    currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
     
 def onClose(screen):
     Client.getGameOptions().getVideoOptions().setGuiScale(guiScale)
 
-# Create and Display Screen
-Client.getGameOptions().getVideoOptions().setGuiScale(2)
-screen = Hud.createScreen("PlotManager", False)
-screen.setOnInit(JavaWrapper.methodToJava(init))
-screen.setOnClose(JavaWrapper.methodToJava(onClose))
-Hud.openScreen(screen)
+def main():
+    global lang
+    
+    # Language
+    lang = Lang(Chat, file.getParent() + "/lang/" + file.getName().replace(".py", "") + ".lang")
+    if not lang.load():
+        Chat.log(Chat.createTextBuilder().append("Invalid or empty lang file").withColor(0xc).build())
+        return
+    
+    # Create and Display Screen
+    Client.getGameOptions().getVideoOptions().setGuiScale(2)
+    screen = Hud.createScreen(lang.get("title"), False)
+    screen.setOnInit(JavaWrapper.methodToJava(init))
+    screen.setOnClose(JavaWrapper.methodToJava(onClose))
+    Hud.openScreen(screen)
+    
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,23 @@
+{
+    "title": "General GUI",
+    "accountSelectionTitle": "Canstein Account selection and player Input",
+    "selectAllAccounts": "ALL",
+    "playerInputField": "Player:",
+    "generalOptionsTitle": "General Options(for all selected players)",
+    "teleportAction": "Teleport to you",
+    "muteAction": "Mute" ,
+    "unmuteAction": "Unmute",
+    "jailAction": "Jail",
+    "unjailAction": "Unjail",
+    "sendServerTitle": "Send to another server (for all selected palyers)",
+    "lobbyServer": "Lobby",
+    "creativeServer": "Creative",
+    "eventServer": "Events",
+    "survivalServer": "Survival",
+    "coopServer": "Cooperation",
+    "utilCommandsTitle": "Util commands (for all player on the server)",
+    "freezeAction": "Freeze",
+    "unfreezeAction": "Unfreeze",
+    "clearInvAction": "Clear Inventory",
+    "backButton": "Back"
+}

@@ -1,0 +1,30 @@
+{
+    "title": "Plots GUI",
+    "accountSelectionTitle": "Canstein Account selection and player Input",
+    "selectAllAccounts": "ALL",
+    "playerInputField": "Player:",
+    
+    "playerActionsTitle": "Player Actions (for every selected player):",
+    "createPlotWithPlayers": "Create plot with players",
+    "createPlotWithPlayersTooltip": "Create plot and trust all selected players",
+    "add": "Add player to plot",
+    "trust": "Trust players on plot",
+    "remove": "Remove player from plot",
+    "deny": "Deny",
+
+    "singlePlayerPlotActionsTitle": "Plot Actions (Only the first player)",
+    "setOwner": "Set Owner",
+    
+    "visit": "Visit",
+    
+    "plotActionsTitle": "Plot actions (Applies to the plot you are on)",
+    "plotInfo": "Plot info",
+    "claimPlot": "Claim plot",
+    "deletePlot": "Delete plot",
+    "markDone": "Mark done",
+    "continue": "Continue",
+
+    "misc": "Misc (for every player seperately)",
+    "createPlot": "Create plot",
+    "createPlotTooltip": "Create plot for every selected player"
+}

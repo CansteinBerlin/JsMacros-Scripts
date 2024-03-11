@@ -1,5 +1,11 @@
 def runCommand(Chat, command):
     Chat.say(command)
+
+def autoRunCommand(Chat, accounts, inputText, command):
+    if "%other%" in command or "%self%" in command:
+        runSelfAllAccounts(Chat, accounts, inputText, command)
+    else:
+        Chat.say(command)
     
 def getPlayerString(accounts, inputText):
     playerString = ""

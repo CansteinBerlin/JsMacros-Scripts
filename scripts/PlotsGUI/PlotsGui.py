@@ -48,11 +48,11 @@ def createPlotWithPlayers(textInput):
     
     Client.waitTick(10)
     Chat.say("/p middle")
-    runSelfAllAccounts(Chat, accounts, textInput, "p trust %player%")
+    runSelfAllAccounts(Chat, accounts, textInput, "p trust %other%")
     Chat.say("/p setowner ServerInfo")
     Client.waitTick(20)
     
-    runSelfAllAccounts(Chat, accounts, textInput, "tphere %player%")
+    runSelfAllAccounts(Chat, accounts, textInput, "tphere %other%")
 
 def createPlotForAllPlayers(textInput):
     copy = list(accounts.selectedAccounts)
@@ -119,7 +119,7 @@ def init(screen):
     
     # Define Commands and titles 
     texts_1 = [lang.get("createPlotWithPlayers"), lang.get("add"), lang.get("trust"), lang.get("remove"), lang.get("deny")]
-    actions_1 = [lang.get("createPlotWithPlayersTooltip"), "p add %player%", "p trust %player%", "p remove %player%", "p deny %player%"]
+    actions_1 = [lang.get("createPlotWithPlayersTooltip"), "p add %other%", "p trust %other%", "p remove %other%", "p deny %other%"]
     
     # Create button plot create
     buttons = []
@@ -145,7 +145,7 @@ def init(screen):
 
     # Define Commands and titles
     texts_2 = [lang.get("setOwner"), lang.get("visit")]
-    actions_2 = ["p setowner %player%", "p visit %player%"]
+    actions_2 = ["p setowner %other%", "p visit %other%"]
     
     # Create buttons
     buttons = []

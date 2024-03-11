@@ -90,7 +90,7 @@ def init(screen):
     
     # Define commands and titles
     texts_1 = [lang.get("teleportAction"), lang.get("muteAction"), lang.get("unmuteAction"), lang.get("jailAction"), lang.get("unjailAction")]
-    actions_1 = ["tphere %player%", "mute %player%", "unmute %player%", "jail %player% 1h Auszeit!", "unjail %player%"]
+    actions_1 = ["tphere %other%", "mute %other%", "unmute %other%", "jail %other% 1h Auszeit!", "unjail %other%"]
     
     # Create Buttons 
     buttons = []
@@ -114,9 +114,9 @@ def init(screen):
     buttons = []
     for index in range(len(actions_2)):
         buttons.append(screen.addButton(0, currentYPos, width / (len(actions_2) + 1), BUTTON_HEIGHT, texts_2[index], JavaWrapper.methodToJavaAsync(
-            lambda btnHelper, _: runSelfAllAccounts(Chat, accounts, textInput.getText(), "send %player% " + actions_2[texts_2.index(btnHelper.getLabel().getString())])
+            lambda btnHelper, _: runSelfAllAccounts(Chat, accounts, textInput.getText(), "send %other% " + actions_2[texts_2.index(btnHelper.getLabel().getString())])
         )))
-        buttons[index].setTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + "/send %player% " + actions_2[index]))
+        buttons[index].setTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + "/send %other% " + actions_2[index]))
     centerWidgets(screen, buttons)
     currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
     
@@ -126,13 +126,13 @@ def init(screen):
     
     # Define commands and titles
     texts_3 = [lang.get("freezeAction"), lang.get("unfreezeAction"), lang.get("clearInvAction")]
-    actions_3 = ["/freeze on -nothing false", "/freeze off", "/clear @a"]
+    actions_3 = ["/freeze on -nothing false", "/freeze off", "/clear %other%"]
     
     # Create buttons
     buttons = []
     for index in range(len(texts_3)):
         buttons.append(screen.addButton(0, currentYPos, width / (len(actions_3) + 1), BUTTON_HEIGHT, texts_3[index], JavaWrapper.methodToJavaAsync(
-            lambda btnHelper, _: runCommand(Chat, actions_3[texts_3.index(btnHelper.getLabel().getString())])
+            lambda btnHelper, _: autoRunCommand(Chat, accounts, textInput.getText(), actions_3[texts_3.index(btnHelper.getLabel().getString())])
         )))
         buttons[index].setTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_3[index]))
     centerWidgets(screen, buttons)

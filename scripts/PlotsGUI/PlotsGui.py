@@ -49,7 +49,7 @@ def createPlotWithPlayers(textInput):
     Client.waitTick(10)
     Chat.say("/p middle")
     runSelfAllAccounts(Chat, accounts, textInput, "p trust %other%")
-    Chat.say("/p setowner ServerInfo")
+    runSelfAllAccounts(Chat, accounts, textInput, "p setowner %other%")
     Client.waitTick(20)
     
     runSelfAllAccounts(Chat, accounts, textInput, "tphere %other%")
@@ -61,7 +61,7 @@ def createPlotForAllPlayers(textInput):
         accounts.selectedAccounts.append(player)
         
         createPlotWithPlayers(textInput)
-        Client.waitTick(10)
+        Client.waitTick(20)
         
     accounts.selectedAccounts = copy
 

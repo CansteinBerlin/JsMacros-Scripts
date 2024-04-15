@@ -137,6 +137,42 @@ def init(screen):
         buttons[index].setTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_3[index]))
     centerWidgets(screen, buttons)
     currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
+    
+    ############## Gamemode Changer ##############
+    currentYPos = textWithLine(screen, lang.get("gamemodeTitle"), TEXT_INDENT_X, currentYPos)
+    currentYPos += OFFSET_Y_ELEMENTS
+    
+    # Define commands and titles
+    texts_1 = [lang.get("survivalGamemode"), lang.get("creativeGamemode"), lang.get("adventureGamemode"), lang.get("spectatorGamemode")]
+    actions_1 = ["/gm 0 %other%", "/gm 1 %other%", "/gm 2 %other%", "/gm 3 %other%"]
+    
+    # Create Buttons 
+    buttons = []
+    for index in range(len(texts_1)):
+        buttons.append(screen.addButton(0, currentYPos, width / (len(texts_1) + 1), BUTTON_HEIGHT, texts_1[index], JavaWrapper.methodToJavaAsync(
+            lambda btnHelper, _: runSelfAllAccounts(Chat, accounts, textInput.getText(), actions_1[texts_1.index(btnHelper.getLabel().getString())])
+        )))
+        buttons[index].addTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_1[index]))
+    centerWidgets(screen, buttons)
+    currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
+
+    ############## Player Utilities ##############
+    currentYPos = textWithLine(screen, lang.get("playerUtilitiesTitle"), TEXT_INDENT_X, currentYPos)
+    currentYPos += OFFSET_Y_ELEMENTS
+    
+    # Define commands and titles
+    texts_1 = [lang.get("hidePlayers"), lang.get("showPlayers")]
+    actions_1 = ["/pd hide %other%", "/pd show %other%"]
+    
+    # Create Buttons 
+    buttons = []
+    for index in range(len(texts_1)):
+        buttons.append(screen.addButton(0, currentYPos, width / (len(texts_1) + 1), BUTTON_HEIGHT, texts_1[index], JavaWrapper.methodToJavaAsync(
+            lambda btnHelper, _: runSelfAllAccounts(Chat, accounts, textInput.getText(), actions_1[texts_1.index(btnHelper.getLabel().getString())])
+        )))
+        buttons[index].addTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_1[index]))
+    centerWidgets(screen, buttons)
+    currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
 
     ############## Close GUI ##############
     # Close Gui

@@ -19,8 +19,7 @@ def runSelfAllAccounts(Chat, accounts, inputText, command):
     playerString = getPlayerString(accounts, inputText)
     if len(playerString) == 0: return
     
-    Chat.say("/runcommand self \"" + command + "\" " + playerString)
-    Chat.log("/runcommand self \"" + command + "\" " + playerString)
+    Chat.say("/runcommand -i self \"" + command + "\" " + playerString)
     
 def runOtherAllAccounts(Chat, accounts, inputText, command):
     playerString = getPlayerString(accounts, inputText)

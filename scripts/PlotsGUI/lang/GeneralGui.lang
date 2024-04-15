@@ -19,5 +19,13 @@
     "freezeAction": "Freeze",
     "unfreezeAction": "Unfreeze",
     "clearInvAction": "Clear Inventory",
+    "gamemodeTitle": "Gamemodes(for all selected players)",
+    "survivalGamemode": "Survival",
+    "creativeGamemode": "Creative",
+    "adventureGamemode": "Adventure",
+    "spectatorGamemode": "Spectator",
+    "playerUtilitiesTitle": "Player Utilities",
+    "hidePlayers": "Hide Players",
+    "showPlayers": "Show Players",
     "backButton": "Back"
 }

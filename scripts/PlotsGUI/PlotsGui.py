@@ -61,7 +61,7 @@ def createPlotForAllPlayers(textInput):
         accounts.selectedAccounts.append(player)
         
         createPlotWithPlayers(textInput)
-        Client.waitTick(20)
+        Client.waitTick(30)
         
     accounts.selectedAccounts = copy
 

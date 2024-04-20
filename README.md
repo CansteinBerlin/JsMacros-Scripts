@@ -8,8 +8,8 @@ In this project, various [JsMacros](https://modrinth.com/mod/jsmacros) scripts a
 |-----------------------|----------|-------------------------------|-------------------------------------------|
 | `MainWindow-Admin.py` | Python ¹ | Moderation Script (Main Manu) | menu to switch between the two GUIs       |
 | `GeneralGui.py`       | Python ¹ | Moderation Script (Tool GUI)  | general commands for the moderation ²     |
-| `PlotsGui.py`         | Python ¹ | Moderation Script (Tool GUI)  | PlotSquared commands for the moderation ² |
-| `UserGui.py`          | Python ¹ | Guest Script (Tool GUI)       | contains general player commands          |
+| `PlotsGui.py`         | Python ¹ | Moderation Script (Plots GUI)  | PlotSquared commands for the moderation ² |
+| `UserGui.py`          | Python ¹ | Guest Script (User GUI)       | contains general player commands          |
 
 ¹ needs the [Language Extensions](https://jsmacros.wagyourtail.xyz/extensions.html) for Python: [JsMacros-Jython](https://github.com/JsMacros/JsMacros-Jython)
 

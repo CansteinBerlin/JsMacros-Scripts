@@ -1,15 +1,15 @@
 {
-    "title": "Canstein User GUI",
-    "gamemodeSwitchTitle": "Gamemode Switcher :",
+    "title": "&f[ &eCanstein User GUI &f]",
+    "gamemodeSwitchTitle": "&e&lGamemode Switcher &r&f:",
     "survival": "Survival",
     "creative": "Creative",
     "spectator": "Spectator",
     
-    "serverSwitcherTitle": "Server Switcher :",
+    "serverSwitcherTitle": "&e&lServer Switcher &r&f:",
     "lobbyServer": "Lobby Server",
     "creativeServer": "Creative Server",
 
-    "misc": "Misc :",
+    "misc": "&e&lMisc &r&f:",
     "specialBlocks": "Special-Block List",
     "toggleflight": "Toggleflight"
 }

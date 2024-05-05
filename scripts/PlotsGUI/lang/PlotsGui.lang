@@ -1,10 +1,10 @@
 {
-    "title": "Plots GUI",
-    "accountSelectionTitle": "Canstein Account selection and player Input",
+    "title": "&f[ &6Plots GUI &f]",
+    "accountSelectionTitle": "&7&lCanstein Account-Selection + Player-Name Input &r&f:",
     "selectAllAccounts": "ALL",
     "playerInputField": "Player:",
     
-    "playerActionsTitle": "Player Actions (for every selected player):",
+    "playerActionsTitle": "&6&lPlayer Actions &r&f(for all selected players) :",
     "createPlotWithPlayers": "Create plot with players",
     "createPlotWithPlayersTooltip": "Create plot and trust all selected players",
     "add": "Add player to plot",
@@ -12,19 +12,19 @@
     "remove": "Remove player from plot",
     "deny": "Deny",
 
-    "singlePlayerPlotActionsTitle": "Plot Actions (Only the first player)",
+    "singlePlayerPlotActionsTitle": "&6&lPlot Actions &r&f(only the first player) :",
     "setOwner": "Set Owner",
     
     "visit": "Visit",
     
-    "plotActionsTitle": "Plot actions (Applies to the plot you are on)",
+    "plotActionsTitle": "&6&lPlot Actions &r&f(applies to the plot you are on) :",
     "plotInfo": "Plot info",
     "claimPlot": "Claim plot",
     "deletePlot": "Delete plot",
     "markDone": "Mark done",
     "continue": "Continue",
 
-    "misc": "Misc (for every player seperately)",
+    "misc": "&6&lMisc &r&f(for every player seperately) :",
     "createPlot": "Create plot",
     "createPlotTooltip": "Create plot for every selected player"
 }

@@ -1,15 +1,15 @@
 {
-    "title": "Canstein Account GUI",
-    "gamemodeSwitchTitle": "Gamemode Switcher:",
+    "title": "Canstein User GUI",
+    "gamemodeSwitchTitle": "Gamemode Switcher :",
     "survival": "Survival",
     "creative": "Creative",
     "spectator": "Spectator",
     
-    "serverSwitcherTitle": "Server Switcher:",
+    "serverSwitcherTitle": "Server Switcher :",
     "lobbyServer": "Lobby Server",
     "creativeServer": "Creative Server",
 
-    "misc": "Misc",
-    "specialBlocks": "Spezielle blöcke bekommen",
+    "misc": "Misc :",
+    "specialBlocks": "Special-Block List",
     "toggleflight": "Toggleflight"
 }

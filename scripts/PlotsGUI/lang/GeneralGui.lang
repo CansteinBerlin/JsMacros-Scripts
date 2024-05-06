@@ -19,6 +19,7 @@
     "freezeAction": "Freeze",
     "unfreezeAction": "Unfreeze",
     "clearInvAction": "Clear Inventory",
+    "ppoResetAction": "Reset particles",
     "gamemodeTitle": "&2&lGamemodes &r&f(for all selected players) :",
     "survivalGamemode": "Survival",
     "creativeGamemode": "Creative",
@@ -27,5 +28,6 @@
     "playerUtilitiesTitle": "&2&lPlayer Utilities &r&f(for all selected players) :",
     "hidePlayers": "Hide Players",
     "showPlayers": "Show Players",
+    "resetRank": "Reset Playerrank",
     "backButton": "Back"
 }

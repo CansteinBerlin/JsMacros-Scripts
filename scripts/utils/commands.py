@@ -16,10 +16,28 @@ def getPlayerString(accounts, inputText):
     return playerString.strip()
 
 def runSelfAllAccounts(Chat, accounts, inputText, command):
-    playerString = getPlayerString(accounts, inputText)
-    if len(playerString) == 0: return
-    
-    Chat.say("/runcommand -i self \"" + command + "\" " + playerString)
+    if " || " in command:
+        parts = command.split(" || ")
+        runSelfAllAccounts(Chat, accounts, inputText, parts[0])
+        runSelfAllAccounts(Chat, accounts, inputText, parts[1])
+    else:
+        playerString = getPlayerString(accounts, inputText)
+        if len(playerString) == 0: return
+        
+        Chat.say("/runcommand -i self \"" + command + "\" " + playerString)
+        Chat.log("/runcommand -i self \"" + command + "\" " + playerString)
+        
+def runMultipleSelfAllAccounts(Chat, Client, accounts, inputText, command):
+    if " || " in command:
+        parts = command.split(" || ")
+        runMultipleSelfAllAccounts(Chat, Client, accounts, inputText, parts[0])
+        Client.waitTick(20)
+        runMultipleSelfAllAccounts(Chat, Client, accounts, inputText, parts[1])
+    else:
+        playerString = getPlayerString(accounts, inputText)
+        if len(playerString) == 0: return
+        
+        Chat.say("/runcommand -i self \"" + command + "\" " + playerString)
     
 def runOtherAllAccounts(Chat, accounts, inputText, command):
     playerString = getPlayerString(accounts, inputText)

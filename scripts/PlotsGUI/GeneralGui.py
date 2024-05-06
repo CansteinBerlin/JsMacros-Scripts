@@ -114,9 +114,9 @@ def init(screen):
     buttons = []
     for index in range(len(actions_2)):
         buttons.append(screen.addButton(0, currentYPos, width / (len(actions_2) + 1), BUTTON_HEIGHT, texts_2[index], JavaWrapper.methodToJavaAsync(
-            lambda btnHelper, _: runSelfAllAccounts(Chat, accounts, textInput.getText(), "send %other% " + actions_2[texts_2.index(btnHelper.getLabel().getString())])
+            lambda btnHelper, _: runSelfAllAccounts(Chat, accounts, textInput.getText(), "redcommandaliasbukkit %other% server " + actions_2[texts_2.index(btnHelper.getLabel().getString())])
         )))
-        buttons[index].setTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + "/send %other% " + actions_2[index]))
+        buttons[index].setTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + "/redcommandaliasbukkit %other% server " + actions_2[index]))
     centerWidgets(screen, buttons)
     currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
     
@@ -125,8 +125,8 @@ def init(screen):
     currentYPos += OFFSET_Y_ELEMENTS
     
     # Define commands and titles
-    texts_3 = [lang.get("freezeAction"), lang.get("unfreezeAction"), lang.get("clearInvAction")]
-    actions_3 = ["/freeze on -nothing false", "/freeze off", "/clear %other%"]
+    texts_3 = [lang.get("freezeAction"), lang.get("unfreezeAction"), lang.get("clearInvAction"), lang.get("ppoResetAction")]
+    actions_3 = ["/freeze on -nothing false", "/freeze off", "/clear %other%", "/ppo %other% reset"]
     
     # Create buttons
     buttons = []
@@ -161,14 +161,14 @@ def init(screen):
     currentYPos += OFFSET_Y_ELEMENTS
     
     # Define commands and titles
-    texts_1 = [lang.get("hidePlayers"), lang.get("showPlayers")]
-    actions_1 = ["/pd hide %other%", "/pd show %other%"]
+    texts_1 = [lang.get("hidePlayers"), lang.get("showPlayers"), lang.get("resetRank")]
+    actions_1 = ["/pd hide %other%", "/pd show %other%", "redcommandaliasbukkit %self% lpb user %other% parent set mitglied || redcommandaliasbukkit %self% lpb user %other% parent add canstein-rang"]
     
     # Create Buttons 
     buttons = []
     for index in range(len(texts_1)):
         buttons.append(screen.addButton(0, currentYPos, width / (len(texts_1) + 1), BUTTON_HEIGHT, texts_1[index], JavaWrapper.methodToJavaAsync(
-            lambda btnHelper, _: runSelfAllAccounts(Chat, accounts, textInput.getText(), actions_1[texts_1.index(btnHelper.getLabel().getString())])
+            lambda btnHelper, _: runMultipleSelfAllAccounts(Chat, Client, accounts, textInput.getText(), actions_1[texts_1.index(btnHelper.getLabel().getString())])
         )))
         buttons[index].addTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_1[index]))
     centerWidgets(screen, buttons)

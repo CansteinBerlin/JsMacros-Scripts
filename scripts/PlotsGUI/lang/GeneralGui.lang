@@ -19,7 +19,7 @@
     "freezeAction": "Freeze",
     "unfreezeAction": "Unfreeze",
     "clearInvAction": "Clear Inventory",
-    "ppoResetAction": "Reset particles",
+    "ppoResetAction": "Reset Particles",
     "gamemodeTitle": "&2&lGamemodes &r&f(for all selected players) :",
     "survivalGamemode": "Survival",
     "creativeGamemode": "Creative",

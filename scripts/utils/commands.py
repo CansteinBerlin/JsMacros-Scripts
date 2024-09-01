@@ -25,7 +25,7 @@ def runSelfAllAccounts(Chat, accounts, inputText, command):
         if len(playerString) == 0: return
         
         Chat.say("/runcommand -i self \"" + command + "\" " + playerString)
-        Chat.log("/runcommand -i self \"" + command + "\" " + playerString)
+        # Chat.log("/runcommand -i self \"" + command + "\" " + playerString)
         
 def runMultipleSelfAllAccounts(Chat, Client, accounts, inputText, command):
     if " || " in command:

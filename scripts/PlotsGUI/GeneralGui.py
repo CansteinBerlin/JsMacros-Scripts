@@ -143,16 +143,16 @@ def init(screen):
     currentYPos += OFFSET_Y_ELEMENTS
     
     # Define commands and titles
-    texts_1 = [lang.get("survivalGamemode"), lang.get("creativeGamemode"), lang.get("adventureGamemode"), lang.get("spectatorGamemode")]
-    actions_1 = ["/gm 0 %other%", "/gm 1 %other%", "/gm 2 %other%", "/gm 3 %other%"]
+    texts_4 = [lang.get("survivalGamemode"), lang.get("creativeGamemode"), lang.get("adventureGamemode"), lang.get("spectatorGamemode")]
+    actions_4 = ["/gm 0 %other%", "/gm 1 %other%", "/gm 2 %other%", "/gm 3 %other%"]
     
     # Create Buttons 
     buttons = []
-    for index in range(len(texts_1)):
-        buttons.append(screen.addButton(0, currentYPos, width / (len(texts_1) + 1), BUTTON_HEIGHT, texts_1[index], JavaWrapper.methodToJavaAsync(
-            lambda btnHelper, _: runSelfAllAccounts(Chat, accounts, textInput.getText(), actions_1[texts_1.index(btnHelper.getLabel().getString())])
+    for index in range(len(texts_4)):
+        buttons.append(screen.addButton(0, currentYPos, width / (len(texts_4) + 1), BUTTON_HEIGHT, texts_4[index], JavaWrapper.methodToJavaAsync(
+            lambda btnHelper, _: runSelfAllAccounts(Chat, accounts, textInput.getText(), actions_4[texts_4.index(btnHelper.getLabel().getString())])
         )))
-        buttons[index].addTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_1[index]))
+        buttons[index].addTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_4[index]))
     centerWidgets(screen, buttons)
     currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
 
@@ -161,16 +161,16 @@ def init(screen):
     currentYPos += OFFSET_Y_ELEMENTS
     
     # Define commands and titles
-    texts_1 = [lang.get("hidePlayers"), lang.get("showPlayers"), lang.get("resetRank")]
-    actions_1 = ["/pd hide %other%", "/pd show %other%", "redcommandaliasbukkit %self% lpb user %other% parent set mitglied || redcommandaliasbukkit %self% lpb user %other% parent add canstein-rang"]
+    texts_5 = [lang.get("hidePlayers"), lang.get("showPlayers"), lang.get("resetRank")]
+    actions_5 = ["/pd hide %other%", "/pd show %other%", "redcommandaliasbukkit %self% lpb user %other% parent set mitglied || redcommandaliasbukkit %self% lpb user %other% parent add canstein-rang"]
     
     # Create Buttons 
     buttons = []
-    for index in range(len(texts_1)):
-        buttons.append(screen.addButton(0, currentYPos, width / (len(texts_1) + 1), BUTTON_HEIGHT, texts_1[index], JavaWrapper.methodToJavaAsync(
-            lambda btnHelper, _: runMultipleSelfAllAccounts(Chat, Client, accounts, textInput.getText(), actions_1[texts_1.index(btnHelper.getLabel().getString())])
+    for index in range(len(texts_5)):
+        buttons.append(screen.addButton(0, currentYPos, width / (len(texts_5) + 1), BUTTON_HEIGHT, texts_5[index], JavaWrapper.methodToJavaAsync(
+            lambda btnHelper, _: runMultipleSelfAllAccounts(Chat, Client, accounts, textInput.getText(), actions_5[texts_5.index(btnHelper.getLabel().getString())])
         )))
-        buttons[index].addTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_1[index]))
+        buttons[index].addTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_5[index]))
     centerWidgets(screen, buttons)
     currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
 

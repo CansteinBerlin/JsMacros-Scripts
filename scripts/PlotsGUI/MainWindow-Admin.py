@@ -39,7 +39,6 @@ currentScreen = GlobalVars.getString("currentOpenScreen")
 
 if currentScreen == None: 
     # Create and Display Screen
-    Chat.log("OpenScreen")
     Client.getGameOptions().getVideoOptions().setGuiScale(2)
     screen = Hud.createScreen("Canstein Admin Tools", False)
     screen.setOnInit(JavaWrapper.methodToJava(init))

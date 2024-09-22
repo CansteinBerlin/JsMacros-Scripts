@@ -11,5 +11,9 @@
 
     "misc": "&e&lMisc &r&f:",
     "specialBlocks": "Special-Block List",
-    "toggleflight": "Toggleflight"
+    "toggleflight": "Toggleflight",
+
+    "plotsquared": "&e&lPlotsquared &r&f:",
+    "plotAuto": "Create Plot",
+    "tpLastPlot": "Teleport to your plot"
 }

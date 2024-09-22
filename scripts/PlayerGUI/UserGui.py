@@ -94,6 +94,26 @@ def init(screen):
     centerWidgets(screen, buttons)
     currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
     
+    ############## Plotsquared ##############
+    # Title:
+    currentYPos = textWithLine(screen, lang.get("plotsquared"), TEXT_INDENT_X, currentYPos)
+    currentYPos += OFFSET_Y_ELEMENTS
+    
+    # Define commands and texts
+    texts_4 = [lang.get("plotAuto"), lang.get("tpLastPlot")]
+    actions_4 = ["/p auto", "/p v " + str(Player.getPlayer().getName().getString()) + " last"]
+    
+    # Create buttons
+    buttons = []
+    for index in range(len(actions_4)):
+        buttons.append(screen.addButton(0, currentYPos, width / (len(actions_4) + 1), BUTTON_HEIGHT, texts_4[index], JavaWrapper.methodToJavaAsync(
+            lambda btnHelper, screen: runCommand(Chat, actions_4[texts_4.index(btnHelper.getLabel().getString())])
+        )))
+        buttons[index].setTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_4[index]))
+    centerWidgets(screen, buttons)
+    currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
+    
+    
 def onClose(screen):
     Client.getGameOptions().getVideoOptions().setGuiScale(guiScale)
 

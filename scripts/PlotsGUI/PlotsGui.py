@@ -31,7 +31,7 @@ OFFSET_Y_MARKER = 3
 OFFSET_Y_TITLE = 25
 
 # Data
-CANSTEIN_ACCOUNTS = 15
+CANSTEIN_ACCOUNTS = 18
 ONLINE_COLOR = 0x00ff00
 OFFLINE_COLOR = 0xff0000
 TOOLTIP_COLOR = "&7"
@@ -87,10 +87,10 @@ def init(screen):
     # Checkboxes
     checkboxes = []
     for i in range(CANSTEIN_ACCOUNTS):
-        checkboxes.append(screen.addCheckbox(0, currentYPos, CHECKBOX_SIZE, CHECKBOX_SIZE, 0, str(i + 1), False, JavaWrapper.methodToJava(
+        checkboxes.append(screen.addCheckbox(0, int(currentYPos), CHECKBOX_SIZE, CHECKBOX_SIZE, 0, str(i + 1), False, JavaWrapper.methodToJava(
             lambda btnHelper, screen: accounts.toggle(int(btnHelper.getLabel().getString()))
         )))
-    checkboxes.append(screen.addCheckbox(0, currentYPos, CHECKBOX_SIZE, CHECKBOX_SIZE, 0, lang.get("selectAllAccounts"), False, JavaWrapper.methodToJava(
+    checkboxes.append(screen.addCheckbox(0, int(currentYPos), CHECKBOX_SIZE, CHECKBOX_SIZE, 0, lang.get("selectAllAccounts"), False, JavaWrapper.methodToJava(
         lambda btnHelper, screen: accounts.setAll(btnHelper, checkboxes)            
     )))
     centerWidgets(screen, checkboxes)
@@ -99,16 +99,16 @@ def init(screen):
     # If player not online disable checkboxes and display red Overlay 
     rects = []
     for i in range(CANSTEIN_ACCOUNTS):
-        rects.append(screen.addRect(0, currentYPos, checkboxes[0].getWidth() + ONLINE_MARKER_WIDTH_ADDITION, currentYPos + ONLINE_MARKER_HEIGHT, ONLINE_COLOR, 255, 0, 1))
+        rects.append(screen.addRect(0, int(currentYPos), checkboxes[0].getWidth() + ONLINE_MARKER_WIDTH_ADDITION, currentYPos + ONLINE_MARKER_HEIGHT, ONLINE_COLOR, 255, 0, 1))
         if not ("Canstein" + str(i + 1)) in accounts.onlineAccounts:
             rects[i].setColor(OFFLINE_COLOR)
-    rects.append(screen.addRect(0, currentYPos, checkboxes[0].getWidth() + ONLINE_MARKER_WIDTH_ADDITION, currentYPos + ONLINE_MARKER_HEIGHT, ONLINE_COLOR, 0, 0, 1))
+    rects.append(screen.addRect(0, int(currentYPos), checkboxes[0].getWidth() + ONLINE_MARKER_WIDTH_ADDITION, currentYPos + ONLINE_MARKER_HEIGHT, ONLINE_COLOR, 0, 0, 1))
     centerMultiposWidgets(screen, rects)
     
     # Player Input
     currentYPos += ONLINE_MARKER_HEIGHT + OFFSET_Y_ELEMENTS
-    text = screen.addText(lang.get("playerInputField"), TEXT_INDENT_X, currentYPos + 5, 0xFFFFFF, False, 1, 0)
-    textInput = screen.addTextInput(TEXT_INDENT_X + text.getWidth() + 20, currentYPos, TEXT_INPUT_WIDTH, BUTTON_HEIGHT, "", JavaWrapper.methodToJava(lambda string, screen: None))
+    text = screen.addText(lang.get("playerInputField"), TEXT_INDENT_X, int(currentYPos + 5), 0xFFFFFF, False, 1, 0)
+    textInput = screen.addTextInput(TEXT_INDENT_X + text.getWidth() + 20, int(currentYPos), TEXT_INPUT_WIDTH, BUTTON_HEIGHT, "", JavaWrapper.methodToJava(lambda string, screen: None))
     currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE
     
     
@@ -123,14 +123,14 @@ def init(screen):
     
     # Create button plot create
     buttons = []
-    buttons.append(screen.addButton(0, currentYPos, width / (len(texts_1) + 1), BUTTON_HEIGHT, texts_1[0], JavaWrapper.methodToJavaAsync(
+    buttons.append(screen.addButton(0, int(currentYPos), width // (len(texts_1) + 1), BUTTON_HEIGHT, texts_1[0], JavaWrapper.methodToJavaAsync(
             lambda _, __: createPlotWithPlayers(textInput.getText())
         )))
     buttons[0].addTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_1[0]))
     
     # Create other buttons
     for index in range(1, len(texts_1)):
-        buttons.append(screen.addButton(0, currentYPos, width / (len(texts_1) + 1), BUTTON_HEIGHT, texts_1[index], JavaWrapper.methodToJavaAsync(
+        buttons.append(screen.addButton(0, int(currentYPos), width // (len(texts_1) + 1), BUTTON_HEIGHT, texts_1[index], JavaWrapper.methodToJavaAsync(
             lambda btnHelper, _: runSelfAllAccounts(Chat, accounts, textInput.getText(), actions_1[texts_1.index(btnHelper.getLabel().getString())])
         )))
         buttons[index].addTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + "/" + actions_1[index]))
@@ -150,7 +150,7 @@ def init(screen):
     # Create buttons
     buttons = []
     for index in range(len(actions_2)):
-        buttons.append(screen.addButton(0, currentYPos, width / (len(actions_2) + 1), BUTTON_HEIGHT, texts_2[index], JavaWrapper.methodToJavaAsync(
+        buttons.append(screen.addButton(0, int(currentYPos), width // (len(actions_2) + 1), BUTTON_HEIGHT, texts_2[index], JavaWrapper.methodToJavaAsync(
             lambda btnHelper, _: runFirstAccount(Chat, accounts, textInput.getText(), actions_2[texts_2.index(btnHelper.getLabel().getString())])
         )))
         buttons[index].addTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + "/" + actions_2[index]))
@@ -170,7 +170,7 @@ def init(screen):
     # Create buttons
     buttons = []
     for index in range(len(actions_3)):
-        buttons.append(screen.addButton(0, currentYPos, width / (len(actions_3) + 1), BUTTON_HEIGHT, texts_3[index], JavaWrapper.methodToJavaAsync(
+        buttons.append(screen.addButton(0, int(currentYPos), width // (len(actions_3) + 1), BUTTON_HEIGHT, texts_3[index], JavaWrapper.methodToJavaAsync(
             lambda btnHelper, _: runCommand(Chat, actions_3[texts_3.index(btnHelper.getLabel().getString())])
         )))
         buttons[index].addTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_3[index]))
@@ -187,7 +187,7 @@ def init(screen):
 
     # Create buttons    
     buttons = []
-    buttons.append(screen.addButton(0, currentYPos, width / (len(texts_4) + 1), BUTTON_HEIGHT, texts_4[0], JavaWrapper.methodToJavaAsync(
+    buttons.append(screen.addButton(0, int(currentYPos), width // (len(texts_4) + 1), BUTTON_HEIGHT, texts_4[0], JavaWrapper.methodToJavaAsync(
             lambda _, __: createPlotForAllPlayers(textInput.getText())
         )))
     buttons[0].addTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_4[0]))

@@ -20,8 +20,8 @@ def init(screen):
     width = screen.getWidth()
     height = screen.getHeight()
     
-    fifthWidth = width / 5
-    thirdHeight = height / 3
+    fifthWidth = width // 5
+    thirdHeight = height // 3
     screen.addButton(fifthWidth, thirdHeight, fifthWidth, thirdHeight, "Plot Gui", 
                      JavaWrapper.methodToJava(lambda btn, _: openWindow("Plot Gui")))
     

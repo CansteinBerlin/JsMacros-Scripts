@@ -8,7 +8,7 @@ def centerWidgets(screen, elements):
     
     xPos = widthBetweenElements
     for element in elements:
-        element.setPos(xPos, element.getY())
+        element.setPos(int(xPos), int(element.getY()))
         xPos += element.getWidth() + widthBetweenElements
         
 def centerMultiposWidgets(screen, elements):
@@ -21,18 +21,18 @@ def centerMultiposWidgets(screen, elements):
     
     xPos = widthBetweenElements
     for element in elements:
-        element.setPos(xPos, element.getY1(), xPos + element.getWidth(), element.getY2())
+        element.setPos(int(xPos), int(element.getY1()), int(xPos + element.getWidth()), int(element.getY2()))
         xPos += element.getWidth() + widthBetweenElements
 
 def textWithLine(screen, text, x, y):
-    screen.addText(text, x, y, 0xFFFFFE, False, 1.2, 0)
-    screen.addLine(0, y + 13, screen.getWidth(), y + 13, 0xFFFFFE)
+    screen.addText(text, int(x), int(y), 0xFFFFFE, False, 1.2, 0)
+    screen.addLine(0, int(y + 13), screen.getWidth(), int(y + 13), 0xFFFFFE)
     return y + 13
     
 def createMultipleButtonsWithDifferentFunctions(JavaWrapper, Chat, screen, texts, functions, y, width, height):
     buttons = []
     for i in range(len(functions)):
-        buttons.append(screen.addButton(0, y, width, height, texts[i], JavaWrapper.methodToJavaAsync(
+        buttons.append(screen.addButton(0, int(y), width, height, texts[i], JavaWrapper.methodToJavaAsync(
             lambda btnHelper, screen: functions[texts.index(btnHelper.getLabel().getString())]()
         )))
         buttons[i].setLabel(getTextInitialWordBold(Chat, texts[i]))

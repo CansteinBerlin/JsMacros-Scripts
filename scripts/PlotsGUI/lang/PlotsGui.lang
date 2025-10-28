@@ -26,5 +26,7 @@
 
     "misc": "&6&lMisc &r&f(for every player seperately) :",
     "createPlot": "Create plot",
-    "createPlotTooltip": "Create plot for every selected player"
+    "createPlotTooltip": "Create plot for every selected player",
+    "sendPlotId": "Send Plot ID",
+    "sendPlotIdTooltip": "Send the Plotid as title to every selected player"
 }

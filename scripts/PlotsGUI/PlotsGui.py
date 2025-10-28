@@ -182,8 +182,8 @@ def init(screen):
     currentYPos += OFFSET_Y_ELEMENTS
     
     # Define Commands and titles
-    texts_4 = [lang.get("createPlot")]
-    actions_4 = [lang.get("createPlotTooltip")]
+    texts_4 = [lang.get("createPlot"), lang.get("sendPlotId")]
+    actions_4 = [lang.get("createPlotTooltip"), lang.get("sendPlotIdTooltip")]
 
     # Create buttons    
     buttons = []
@@ -191,6 +191,11 @@ def init(screen):
             lambda _, __: createPlotForAllPlayers(textInput.getText())
         )))
     buttons[0].addTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_4[0]))
+    
+    buttons.append(screen.addButton(0, int(currentYPos), width // (len(texts_4) + 1), BUTTON_HEIGHT, texts_4[1], JavaWrapper.methodToJavaAsync(
+            lambda _, __: runSelfAllAccounts(Chat, accounts, textInput.getText(), "/tm message -stay=150 %other% &6PlotID: %plotsquared_currentplot_xy%")
+        )))
+    buttons[0].addTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_4[1]))
 
     centerWidgets(screen, buttons)
     currentYPos += BUTTON_HEIGHT + OFFSET_Y_TITLE

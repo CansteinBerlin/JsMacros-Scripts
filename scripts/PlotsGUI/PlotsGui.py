@@ -193,7 +193,7 @@ def init(screen):
     buttons[0].addTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_4[0]))
     
     buttons.append(screen.addButton(0, int(currentYPos), width // (len(texts_4) + 1), BUTTON_HEIGHT, texts_4[1], JavaWrapper.methodToJavaAsync(
-            lambda _, __: runSelfAllAccounts(Chat, accounts, textInput.getText(), "/tm message -stay=150 %other% &6PlotID: %plotsquared_currentplot_xy%")
+            lambda _, __: runSelfAllAccounts(Chat, accounts, textInput.getText(), "/tm message -stay=150 %other% " + str(lang.get("plotIdTitle", True)))
         )))
     buttons[0].addTooltip(Chat.ampersandToSectionSymbol(TOOLTIP_COLOR + actions_4[1]))
 

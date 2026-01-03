@@ -13,7 +13,9 @@ class Lang:
                 return False
         return True
                 
-    def get(self, key):
+    def get(self, key, ignoreApersand=False):
         if key in self.langData.keys(): 
+            if ignoreApersand:
+                return self.langData[key]
             return self.Chat.ampersandToSectionSymbol(self.langData[key])
         return "UNKNOWN"

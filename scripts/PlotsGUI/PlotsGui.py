@@ -31,14 +31,11 @@ OFFSET_Y_MARKER = 3
 OFFSET_Y_TITLE = 25
 
 # Data
-CANSTEIN_ACCOUNTS = 18
+CANSTEIN_ACCOUNTS = 21
 ONLINE_COLOR = 0x00ff00
 OFFLINE_COLOR = 0xff0000
 TOOLTIP_COLOR = "&7"
 
-# This represents the canstein accounts that are enabled in the gui
-
-# Functions TODO: FIX WITH PLAYER INPUT
 def createPlotWithPlayers(textInput):
     Chat.say("/p auto")
     Client.waitTick(30)
@@ -99,10 +96,10 @@ def init(screen):
     # If player not online disable checkboxes and display red Overlay 
     rects = []
     for i in range(CANSTEIN_ACCOUNTS):
-        rects.append(screen.addRect(0, int(currentYPos), checkboxes[0].getWidth() + ONLINE_MARKER_WIDTH_ADDITION, currentYPos + ONLINE_MARKER_HEIGHT, ONLINE_COLOR, 255, 0, 1))
+        rects.append(screen.addRect(0, int(currentYPos), CHECKBOX_SIZE + ONLINE_MARKER_WIDTH_ADDITION, currentYPos + ONLINE_MARKER_HEIGHT, ONLINE_COLOR, 255, 0, 1))
         if not ("Canstein" + str(i + 1)) in accounts.onlineAccounts:
             rects[i].setColor(OFFLINE_COLOR)
-    rects.append(screen.addRect(0, int(currentYPos), checkboxes[0].getWidth() + ONLINE_MARKER_WIDTH_ADDITION, currentYPos + ONLINE_MARKER_HEIGHT, ONLINE_COLOR, 0, 0, 1))
+    rects.append(screen.addRect(0, int(currentYPos), CHECKBOX_SIZE + ONLINE_MARKER_WIDTH_ADDITION, currentYPos + ONLINE_MARKER_HEIGHT, ONLINE_COLOR, 0, 0, 1))
     centerMultiposWidgets(screen, rects)
     
     # Player Input

@@ -90,7 +90,7 @@ def init(screen):
     
     # Define commands and titles
     texts_1 = [lang.get("teleportAction"), lang.get("muteAction"), lang.get("unmuteAction"), lang.get("jailAction"), lang.get("unjailAction")]
-    actions_1 = ["tphere %other%", "mute %other%", "unmute %other%", "jail %other% 1h Auszeit!", "unjail %other%"]
+    actions_1 = ["tphere %other%", "mute %other%", "unmute %other%", "jails tempjail %other% main 1h Auszeit!", "jails unjail %other%"]
     
     # Create Buttons 
     buttons = []
